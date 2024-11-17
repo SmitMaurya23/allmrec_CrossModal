@@ -56,7 +56,7 @@ class two_layer_mlp(nn.Module):
 
 class A_llmrec_model(nn.Module):
     def _init_(self, args):
-        super(A_llmrec_model, self).__init__() ####changed#######
+        super()._init_()
         rec_pre_trained_data = args.rec_pre_trained_data
         self.args = args
         self.device = args.device
