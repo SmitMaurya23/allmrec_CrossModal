@@ -11,8 +11,8 @@ from models.llm4rec import *
 from sentence_transformers import SentenceTransformer
 
 class CrossModalAttention(nn.Module):
-    def _init_(self, rec_dim, text_dim, device):
-        super()._init_()
+    def __init__(self, rec_dim, text_dim, device):
+        super().__init__()
         self.device = device
         self.temperature = nn.Parameter(torch.ones(1))
         self.rec_proj = nn.Linear(rec_dim, 256).to(device)
@@ -42,8 +42,8 @@ class CrossModalAttention(nn.Module):
 
 
 class two_layer_mlp(nn.Module):
-    def _init_(self, dims):
-        super()._init_()
+    def __init__(self, dims):
+        super().__init__()
         self.fc1 = nn.Linear(dims, 128)
         self.fc2 = nn.Linear(128, dims)
         self.sigmoid = nn.Sigmoid()
@@ -55,8 +55,8 @@ class two_layer_mlp(nn.Module):
         return x, x1
 
 class A_llmrec_model(nn.Module):
-    def _init_(self, args):
-        super()._init_()
+    def __init__(self, args):
+        super().__init__()
         rec_pre_trained_data = args.rec_pre_trained_data
         self.args = args
         self.device = args.device
