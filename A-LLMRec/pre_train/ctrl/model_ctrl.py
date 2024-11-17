@@ -8,8 +8,8 @@ import random
 
 
 class CrossModalAttention(nn.Module):
-    def __init__(self, rec_dim, text_dim):
-        super().__init__()
+    def _init_(self, rec_dim, text_dim):
+        super()._init_()
         self.temperature = nn.Parameter(torch.ones(1))
         self.rec_proj = nn.Linear(rec_dim, 256)
         self.text_proj = nn.Linear(text_dim, 256)
@@ -32,8 +32,8 @@ class CrossModalAttention(nn.Module):
 
 
 class PointWiseFeedForward(torch.nn.Module):
-    def __init__(self, hidden_units, dropout_rate):
-        super(PointWiseFeedForward, self).__init__()
+    def _init_(self, hidden_units, dropout_rate):
+        super(PointWiseFeedForward, self)._init_()
         self.conv1 = torch.nn.Conv1d(hidden_units, hidden_units, kernel_size=1)
         self.dropout1 = torch.nn.Dropout(p=dropout_rate)
         self.relu = torch.nn.ReLU()
@@ -48,8 +48,8 @@ class PointWiseFeedForward(torch.nn.Module):
 
 
 class SASRec_CTRL(torch.nn.Module):
-    def __init__(self, user_num, item_num, args):
-        super(SASRec_CTRL, self).__init__()
+    def _init_(self, user_num, item_num, args):
+        super(SASRec_CTRL, self)._init_()
         self.kwargs = {'user_num': user_num, 'item_num': item_num, 'args': args}
         self.user_num = user_num
         self.item_num = item_num
@@ -109,7 +109,7 @@ class SASRec_CTRL(torch.nn.Module):
 
     def log2feats(self, log_seqs):
         seqs = self.item_emb(torch.LongTensor(log_seqs).to(self.dev))
-        seqs *= self.item_emb.embedding_dim ** 0.5
+        seqs = self.item_emb.embedding_dim * 0.5
         positions = np.tile(np.array(range(log_seqs.shape[1])), [log_seqs.shape[0], 1])
         seqs += self.pos_emb(torch.LongTensor(positions).to(self.dev))
         seqs = self.emb_dropout(seqs)
@@ -248,4 +248,3 @@ class SASRec_CTRL(torch.nn.Module):
         logits = item_embs.matmul(final_feat.unsqueeze(-1)).squeeze(-1)
         
         return logits
-
